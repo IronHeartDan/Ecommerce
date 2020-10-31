@@ -110,12 +110,14 @@
   box-shadow: 0 0 10px silver;
 }
 
-.profile__menu > span {
+.profile__menu > span,
+.profile__menu > a {
   cursor: pointer;
   color: black;
   font-weight: 500;
   padding: 10px;
   text-align: center;
+  text-decoration: none;
 }
 
 .profile__menu > span:first-child {

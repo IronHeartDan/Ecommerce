@@ -23,7 +23,11 @@ function App() {
       totalPrice += item.price;
     }
   });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const dispatch = useDispatch();
+
   const products = [
     {
       id: "1",
@@ -108,6 +112,10 @@ function App() {
             displayName: authUser.displayName,
           })
         );
+        if (authUser.email) setName(`${authUser?.displayName}`);
+        if (authUser.email) setEmail(`${authUser?.email}`);
+        if (authUser.phoneNumber)
+          setNumber(`${authUser?.phoneNumber.substring(3, 12)}`);
         db.collection("users")
           .doc(authUser.uid)
           .collection("cart")
@@ -118,6 +126,9 @@ function App() {
         dispatch(logout());
         setCart([]);
         dispatch(emptyCart());
+        if (window.location.pathname !== "/") {
+          window.location.replace("/");
+        }
       }
     });
   }, [dispatch]);
@@ -263,17 +274,32 @@ function App() {
                 <div className="checkout__con">
                   <div className="checkout__input">
                     <label htmlFor="name">Name</label>
-                    <input type="text" name="name" value={user?.displayName} />
+                    <input
+                      type="text"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                   </div>
 
                   <div className="checkout__input">
                     <label htmlFor="email">Email</label>
-                    <input type="email" name="email" value={user?.email} />
+                    <input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
 
                   <div className="checkout__input">
                     <label htmlFor="number">Number</label>
-                    <input type="number" name="number" />
+                    <input
+                      type="number"
+                      name="number"
+                      value={number}
+                      onChange={(e) => setNumber(e.target.value)}
+                    />
                   </div>
 
                   <div className="checkout__input">
@@ -321,7 +347,7 @@ function App() {
                 <h1>Total</h1>
                 <div className="checkout__infoCon">
                   {cart.map((item) => (
-                    <div class="totalItem">
+                    <div className="totalItem" key={item.id}>
                       <img src={item.img} alt="" />
                       <div className="totalItem__info">
                         <span>{item.price}</span>

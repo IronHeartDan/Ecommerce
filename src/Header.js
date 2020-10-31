@@ -39,8 +39,9 @@ function Header() {
             <div className="header__profile">
               <Avatar src={user.photo ? user.photo : profile} />
               <div className="profile__menu">
-                <span>Profile</span>
-                <span>Settings</span>
+                <Link to="/">
+                  <span>Home</span>
+                </Link>
                 <span onClick={() => auth.signOut()}>LogOut</span>
               </div>
             </div>

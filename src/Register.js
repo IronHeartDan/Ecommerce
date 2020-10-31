@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { auth, provider } from "./Firebase";
 import "./Login.css";
+import firebase from "firebase";
 import wavetop from "./wave-top.svg";
 import wavebottom from "./wave-bottom.svg";
 
@@ -10,10 +11,16 @@ function Register() {
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [pass, setPass] = useState("");
-  const [code, setCode] = useState(0);
+  const [code, setCode] = useState("");
   const [OR, setOR] = useState(0);
+  const [confirmationResult, setResult] = useState(null);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
+
+  auth.onAuthStateChanged((authUser) => {
+    if (authUser) history.push("/");
+  });
 
   const Eregister = () => {
     if (email.length > 0 && pass.length > 0) {
@@ -29,13 +36,55 @@ function Register() {
     }
   };
 
-  const Nregister = () => {
-    console.log("Nregister");
+  const showChaptcha = () => {
+    if (number.length > 0) {
+      if (number.length === 10) {
+        setBtnDisabled(true);
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+          "send__otp",
+          {
+            size: "invisible",
+            callback: function (response) {
+              console.log("Captcha Done");
+              setError("Sending OTP");
+            },
+          }
+        );
+        auth
+          .signInWithPhoneNumber(`+91${number}`, window.recaptchaVerifier)
+          .then((confirmationResult) => {
+            setResult(confirmationResult);
+            setError("OTP SENT");
+          })
+          .catch((err) => {
+            setBtnDisabled(false);
+            setError(err.message);
+          });
+      } else {
+        setError("Invalid Number");
+      }
+    } else {
+      setError("Empty Input Feild(s)");
+    }
   };
 
-  auth.onAuthStateChanged((authUser) => {
-    if (authUser) history.push("/");
-  });
+  const Nregister = () => {
+    if (code.length > 0) {
+      confirmationResult
+        .confirm(code)
+        .then(function (result) {
+          // User signed in successfully.
+          var user = result.user;
+          console.log(user);
+          // ...
+        })
+        .catch(function (error) {
+          console.log("Incorrect OTP!");
+        });
+    } else {
+      setError("Enter OTP");
+    }
+  };
 
   const Glogin = () => {
     auth.signInWithPopup(provider).catch(console.error());
@@ -84,6 +133,13 @@ function Register() {
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
                 />
+                <Button
+                  id="send__otp"
+                  onClick={showChaptcha}
+                  disabled={btnDisabled}
+                >
+                  Send OTP
+                </Button>
               </>
             )}
           </div>
@@ -100,7 +156,7 @@ function Register() {
               </>
             ) : (
               <>
-                <label htmlFor="code">Enter Code</label>
+                <label htmlFor="code">Enter OTP</label>
                 <input
                   name="code"
                   type="number"

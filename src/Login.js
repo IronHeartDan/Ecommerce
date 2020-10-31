@@ -3,16 +3,24 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { auth, provider } from "./Firebase";
 import "./Login.css";
+import firebase from "firebase";
 import wavetop from "./wave-top.svg";
 import wavebottom from "./wave-bottom.svg";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const [OR, setOR] = useState(0);
   const [pass, setPass] = useState("");
+  const [code, setCode] = useState("");
+  const [OR, setOR] = useState(0);
+  const [confirmationResult, setResult] = useState(null);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [error, setError] = useState("");
   const history = useHistory();
+
+  auth.onAuthStateChanged((authUser) => {
+    if (authUser) history.push("/");
+  });
 
   const Elogin = (e) => {
     e.preventDefault();
@@ -29,9 +37,55 @@ function Login() {
     }
   };
 
-  auth.onAuthStateChanged((authUser) => {
-    if (authUser) history.push("/");
-  });
+  const showChaptcha = () => {
+    if (number.length > 0) {
+      if (number.length === 10) {
+        setBtnDisabled(true);
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+          "send__otp",
+          {
+            size: "invisible",
+            callback: function (response) {
+              console.log("Captcha Done");
+              setError("Sending OTP");
+            },
+          }
+        );
+        auth
+          .signInWithPhoneNumber(`+91${number}`, window.recaptchaVerifier)
+          .then((confirmationResult) => {
+            setResult(confirmationResult);
+            setError("OTP SENT");
+          })
+          .catch((err) => {
+            setBtnDisabled(false);
+            setError(err.message);
+          });
+      } else {
+        setError("Invalid Number");
+      }
+    } else {
+      setError("Empty Input Feild(s)");
+    }
+  };
+
+  const Nlogin = () => {
+    if (code.length > 0) {
+      confirmationResult
+        .confirm(code)
+        .then(function (result) {
+          // User signed in successfully.
+          var user = result.user;
+          console.log(user.phoneNumber);
+          // ...
+        })
+        .catch(function (error) {
+          console.log("Incorrect OTP!");
+        });
+    } else {
+      setError("Enter OTP");
+    }
+  };
 
   const Glogin = () => {
     auth.signInWithPopup(provider).catch(console.error());
@@ -80,20 +134,44 @@ function Login() {
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
                 />
+
+                <Button
+                  id="send__otp"
+                  onClick={showChaptcha}
+                  disabled={btnDisabled}
+                >
+                  Send OTP
+                </Button>
               </>
             )}
           </div>
           <div className="login__input">
-            <label htmlFor="pass">Enter Password</label>
-            <input
-              name="pass"
-              type="password"
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
-            />
+            {OR === 0 ? (
+              <>
+                <label htmlFor="pass">Enter Password</label>
+                <input
+                  name="pass"
+                  type="password"
+                  value={pass}
+                  onChange={(e) => setPass(e.target.value)}
+                />
+              </>
+            ) : (
+              <>
+                <label htmlFor="code">Enter OTP</label>
+                <input
+                  name="code"
+                  type="number"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                />
+              </>
+            )}
           </div>
           <div className="login__buttons">
-            <Button onClick={Elogin}>LogIn</Button>
+            <Button id="sign-up-button" onClick={OR === 0 ? Elogin : Nlogin}>
+              LogIn
+            </Button>
             <Button onClick={Glogin}>Google</Button>
           </div>
           <div className="login_register">

@@ -74,6 +74,12 @@
   box-shadow: 0 0 10px black;
 }
 
+.login__input > input::-webkit-outer-spin-button,
+.login__input > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .login__buttons {
   margin-top: 10px;
   display: flex;
@@ -85,6 +91,18 @@
   background: #00fdec;
   border: 2px solid;
   width: 180px;
+  padding: 5px;
+  color: black;
+  outline: none;
+  box-shadow: 0 0 10px black;
+  cursor: pointer;
+}
+
+#send__otp {
+  margin-top: 5px;
+  width: 100%;
+  background: #00fdec;
+  border: 2px solid;
   padding: 5px;
   color: black;
   outline: none;
