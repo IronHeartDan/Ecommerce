@@ -1,39 +1,179 @@
-.App {
+.helper {
+  position: sticky;
+  top: 60px;
+  z-index: 50;
+  background-color: #6c5ce7;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.helper .MuiButton-root {
+  border-radius: 0;
+  color: white;
+}
+
+.helper a {
+  text-decoration: none;
+}
+
+.helper__info > span {
+  color: white;
+  margin: 5px;
+}
+
+.cart__header {
+  position: sticky;
+  top: 0;
+  background-color: #00fdec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 100vw;
+}
+
+.empty__cart {
+  margin-top: 10px;
+  display: grid;
   text-align: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.empty__cart > img {
+  object-fit: contain;
+  height: 250px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+.main {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 24vw);
+  column-gap: 5px;
+  justify-content: center;
+  row-gap: 5px;
+  grid-auto-rows: min-content;
 }
 
-.App-header {
-  min-height: 100vh;
+.checkout {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.checkout__form,
+.checkout__info {
+  margin-top: 10px;
+  box-shadow: 0 0 10px black;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  width: 40vw;
+  background-color: white;
+  max-width: 500px;
+}
+
+.checkout__con {
+  width: 100%;
+  height: 100%;
+}
+
+.checkout__infoCon {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.checkout__infoCon::-webkit-scrollbar {
+  display: none;
+}
+
+.totalItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  border-top: 1px solid silver;
+}
+
+.totalItem > img {
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+}
+
+.checkout__action {
+  border-top: 1px solid black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.checkout__action > button {
+  background-color: springgreen;
+  flex: 1;
+}
+.checkout__action > span {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex: 1;
+}
+.checkout__input {
+  display: flex;
+  flex-direction: column;
+  background-color: #00fdec;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.checkout__input > label {
+  padding: 10px 0;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
+.checkout__input > input,
+select,
+textarea {
+  border: none;
+  outline: none;
+  padding: 10px;
+}
+
+.checkout__input > input::-webkit-outer-spin-button,
+.checkout__input > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.checkout__input > textarea {
+  resize: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .checkout {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  50% {
-    transform: translateY(10px)
+  .checkout__form,
+  .checkout__info {
+    width: 100%;
   }
-  100% {
-    transform: translateY(0px)
+  .helper {
+    top: 60px;
+    justify-content: space-between;
+  }
+  .main {
+    grid-template-columns: repeat(2, 48vw);
+    grid-auto-rows: min-content;
+    column-gap: 2px;
+    row-gap: 2px;
   }
 }

@@ -1,0 +1,141 @@
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  z-index: 100;
+  box-shadow: 0 0 5px black;
+  /* background: linear-gradient(90deg, #fff, #00fdec); */
+  background-color: #00fdec;
+}
+
+.header .MuiSvgIcon-root {
+  cursor: pointer;
+}
+
+.header__logo > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__logo > a > img {
+  object-fit: contain;
+  height: 40px;
+}
+
+.header__search {
+  flex: 1;
+  max-width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.header__search .MuiSvgIcon-root {
+  background-color: white;
+  padding: 5px;
+  border-radius: 0 10px 10px 0;
+}
+
+.header__search > input {
+  background: transparent;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 10px 5px;
+}
+
+.header__data {
+  display: flex;
+  align-items: center;
+}
+.header__data > span {
+  margin: 5px;
+}
+
+.profile__menu {
+  display: none;
+}
+
+.profile__menu::before {
+  z-index: -1;
+  position: absolute;
+  right: 0;
+  top: -10px;
+  transform: translateX(-10px) rotate(45deg);
+  background-color: white;
+  transition: all 0.5s ease-in-out;
+  content: "";
+  width: 20px;
+  height: 20px;
+}
+
+.cart__link {
+  color: black;
+}
+
+.cart__link span {
+  color: black;
+  margin: 5px;
+}
+
+.profile__link,
+.cart__link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.profile__link span {
+  color: black;
+  margin: 5px;
+}
+
+.header__profile:hover > .profile__menu {
+  background-color: white;
+  width: 150px;
+  border-radius: 10px;
+  margin: 10px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px silver;
+}
+
+.profile__menu > span {
+  cursor: pointer;
+  color: black;
+  font-weight: 500;
+  padding: 10px;
+  text-align: center;
+}
+
+.profile__menu > span:first-child {
+  border-radius: 10px 10px 0 0;
+}
+.profile__menu > span:last-child {
+  color: tomato;
+  border-radius: 0 0 10px 10px;
+}
+
+.profile__menu > span:hover {
+  background-color: silver;
+}
+
+@media only screen and (max-width: 800px) {
+  .profile__menu {
+    margin: 5px;
+  }
+  .header__name,
+  .header__logo {
+    display: none;
+  }
+}

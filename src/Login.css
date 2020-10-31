@@ -1,0 +1,128 @@
+.login {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.login__top {
+  width: 100%;
+  object-fit: contain;
+  position: fixed;
+  top: 0;
+  z-index: -100;
+}
+
+.login__bottom {
+  width: 100%;
+  object-fit: contain;
+  position: fixed;
+  bottom: 0;
+  z-index: -100;
+}
+
+.login__con {
+  background-image: url("./loginBg.svg");
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 10px black;
+  width: 500px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.login__con > h1 {
+  font-size: 45px;
+  color: white;
+  text-shadow: 0 0 10px black;
+}
+
+.login__mCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  margin-bottom: 10px;
+}
+.login__input {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__input > label {
+  margin: 5px 0;
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 0 10px black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login__or {
+  cursor: pointer;
+}
+
+.login__input > input {
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px black;
+}
+
+.login__buttons {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.login__buttons > button {
+  background: #00fdec;
+  border: 2px solid;
+  width: 180px;
+  padding: 5px;
+  color: black;
+  outline: none;
+  box-shadow: 0 0 10px black;
+  cursor: pointer;
+}
+
+.login__error {
+  text-align: center;
+  padding: 5px;
+  background-color: red;
+  border-radius: 5px;
+  color: white;
+}
+
+.login_register {
+  text-align: center;
+  padding: 10px 0;
+  text-shadow: 0 0 10px black;
+}
+
+.login_register a {
+  text-decoration: none;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .login__con {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .login__mCon {
+    height: 50%;
+  }
+  .login__buttons > button {
+    margin: 10px;
+  }
+}

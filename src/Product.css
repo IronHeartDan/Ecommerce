@@ -1,0 +1,63 @@
+.product {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+
+.product:hover {
+  box-shadow: 0 0 10px black;
+}
+
+.product__image {
+  margin-top: 10px;
+  object-fit: contain;
+  width: 100%;
+  height: 150px;
+}
+
+.product .MuiButton-root {
+  width: 100%;
+  border-radius: 0;
+}
+.product__data {
+  width: 100%;
+}
+.product__info {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.product__info > span {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.product__quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product__quantity button {
+  font-size: 30px;
+}
+.product__quantity > span {
+  margin: 10px;
+}
+
+@media only screen and (max-width: 320px) {
+  .product__image {
+    margin-top: 0;
+  }
+  .product__info {
+    margin: 0;
+    margin-left: 5px;
+  }
+  .product__info > span {
+    font-size: 15px;
+  }
+}
